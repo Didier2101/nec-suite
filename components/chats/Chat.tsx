@@ -121,7 +121,6 @@ export default function Chat({ chatType }: Props) {
                     message: currentInput
                 };
 
-            console.log(`📡 Enviando a ${config.apiEndpoint}:`, bodyPayload);
             const response = await fetch(config.apiEndpoint, {
                 method: 'POST',
                 headers: {
@@ -138,7 +137,6 @@ export default function Chat({ chatType }: Props) {
             }
 
             const data = await response.json();
-            console.log('Respuesta completa:', JSON.stringify(data, null, 2));
 
             // Normalizar respuesta (puede ser array o objeto)
             const normalizedData = Array.isArray(data) ? data[0] : data;
@@ -170,7 +168,6 @@ export default function Chat({ chatType }: Props) {
 
         } catch (error) {
             clearTimeout(timeoutId);
-            console.error('Error en la petición:', error);
 
             // Reemplazar el mensaje "Escribiendo..." con el error
             setMessages(prev => [
@@ -223,11 +220,7 @@ export default function Chat({ chatType }: Props) {
                             {config.title}
                         </h1>
                         <p className="text-gray-600 mt-1">{config.description}</p>
-                        {username && (
-                            <p className="text-sm text-gray-500 mt-1">
-                                Conectado como: <span className="font-medium">{username}</span>
-                            </p>
-                        )}
+
                     </div>
                     <button
                         className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center"

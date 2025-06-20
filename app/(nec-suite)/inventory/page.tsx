@@ -1,9 +1,13 @@
+import { Suspense } from "react";
 import { MainInventory } from "./MainInventory";
+import Loading from "@/src/ui/Loading";
 
 
 export default function MainInventoryPage() {
 
     return (
-        <MainInventory username="admin" />
+        <Suspense fallback={<Loading />}>
+            <MainInventory />
+        </Suspense>
     );
 }

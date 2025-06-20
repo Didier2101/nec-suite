@@ -31,7 +31,7 @@ export default function UserList({ onUserSelected, onUserDeleted, onCreateUser }
             console.log('Usuarios recibidos desde API:', data);
 
             // Asegura que sea array
-           setUsers(Array.isArray(data.users) ? data.users : []);
+            setUsers(Array.isArray(data.users) ? data.users : []);
         } catch (error) {
             console.error('Error fetching users:', error);
             setUsers([]);
@@ -70,7 +70,7 @@ export default function UserList({ onUserSelected, onUserDeleted, onCreateUser }
 
 
     return (
-        <div className="border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-white px-6 py-4 flex justify-between items-center">
                 <h2 className="text-lg font-semibold text-gray-900">Lista de Usuarios</h2>
             </div>

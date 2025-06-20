@@ -1,8 +1,9 @@
+// components/NetworkTopologyDisplay.jsx
 'use client';
 
 import React from 'react';
 
-export default function Page() {
+export default function NetworkTopologyDisplay() { // Renamed from Page
   return (
     <div className=" h-full p-6 rounded-xl shadow-lg bg-white space-y-4">
       <h2 className="text-xl font-semibold text-gray-800">Topología de Red</h2>
@@ -17,7 +18,7 @@ export default function Page() {
       {/* Iframe de topología de red (puede cambiarse por imagen o embed real) */}
       <div className="w-full h-[610px] border rounded-lg overflow-hidden">
         <iframe
-          src="https://networktopology.org/embed/simple-ospf"
+          src="https://192.168.2.19:8050"
           title="Topología OSPF"
           className="w-full h-full"
           allowFullScreen

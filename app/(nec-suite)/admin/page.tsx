@@ -6,6 +6,9 @@ import { User, Shield, Users, Plus, Settings } from 'lucide-react';
 // import UserForm from '@/components/admin/UserForm';
 import UserList from '@/components/admin/UserList';
 import { User as UserType } from '@/types/users';
+import HeaderNecSuite from '@/src/ui/HeaderNecSuite';
+import { TabsNavigation } from '@/src/ui/TabsNavigation';
+import { userTabs } from '@/src/constants/tabs';
 
 export default function AdminPage() {
     const [activeTab, setActiveTab] = useState<'users' | 'roles' | 'new_user'>('users');
@@ -37,55 +40,22 @@ export default function AdminPage() {
         setUsers(users.filter(user => user.id !== id));
     };
 
-   const tabs = [
-        { id: 'users', name: 'Lista de Usuarios', icon: Users },
-        { id: 'new_user', name: 'Nuevo usuario', icon: Plus },
-        { id: 'roles', name: 'Roles y Permisos', icon: Shield },
-    ];
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen">
             {/* Header */}
-            <div className="bg-white shadow">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center py-6">
-                        <div>
-                            <h1 className="text-2xl font-bold text-gray-900 flex items-center">
-                                <User className="mr-3 h-8 w-8 text-blue-600" />
-                                Panel de Administración
-                            </h1>
-                            <p className="text-gray-600 mt-1">
-                                Gestión completa de usuarios y permisos del sistema
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <HeaderNecSuite
+                title="Panel de Administración"
+                description="Gestión completa de usuarios y permisos del sistema"
+                Icon={User}
+            />
 
             {/* Navigation Tabs */}
-            <div className="bg-white border-b border-gray-200">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <nav className="-mb-px flex space-x-8">
-                        {tabs.map((tab) => {
-                            const Icon = tab.icon;
-                            return (
-                                <button
-                                    key={tab.id}
-                                    onClick={() => setActiveTab(tab.id as any)}
-                                    className={`${activeTab === tab.id
-                                        ? 'border-blue-500 text-blue-600'
-                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                                        } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-colors`}
-                                >
-                                    <Icon className="h-5 w-5 mr-2" />
-                                    {tab.name}
-                                </button>
-                            );
-                        })}
-                    </nav>
-                </div>
-            </div>
-
+            <TabsNavigation
+                tabs={userTabs}
+                activeTab={activeTab}
+                onTabChange={(id) => setActiveTab(id as 'users' | 'new_user' | 'roles')}
+            />
             {/* Content */}
             <div className="container mx-auto px-4 py-8">
                 {/* {showForm && (
@@ -99,13 +69,11 @@ export default function AdminPage() {
                 )} */}
 
                 {activeTab === 'users' && (
-                    <div className="bg-white shadow rounded-lg overflow-hidden">
-                        <UserList
-                            onUserSelected={setSelectedUser}
-                            onUserDeleted={handleUserDeleted}
-                            onCreateUser={() => setShowForm(true)}
-                        />
-                    </div>
+                    <UserList
+                        onUserSelected={setSelectedUser}
+                        onUserDeleted={handleUserDeleted}
+                        onCreateUser={() => setShowForm(true)}
+                    />
                 )}
 
                 {activeTab === 'roles' && (
