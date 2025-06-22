@@ -19,30 +19,30 @@ import Swal from "sweetalert2";
 const navigationItems = [
     {
         name: 'VNOC',
-        href: '/vnoc',
+        href: '/nec-suite/vnoc',
         icon: Server,
     },
     {
         name: 'RAG',
-        href: '/rac',
+        href: '/nec-suite/rac',
         icon: Cpu,
     },
     {
         name: 'Inventory',
-        href: '/inventory',
+        href: '/nec-suite/inventory',
         icon: Archive,
     },
-     {
+    {
         name: 'Topo Logic',
-        href: '/topo',
+        href: '/nec-suite/topo',
         icon: ChartNetwork,
     },
     {
         name: 'Administracion',
-        href: '/admin',
+        href: '/nec-suite/admin',
         icon: Settings,
     },
-   
+
 ];
 
 interface SidebarProps {

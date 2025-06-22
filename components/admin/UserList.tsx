@@ -12,7 +12,7 @@ interface UserListProps {
     onCreateUser: () => void;
 }
 
-export default function UserList({ onUserSelected, onUserDeleted, onCreateUser }: UserListProps) {
+export default function UserList({ onUserSelected }: UserListProps) {
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
     const [dropdownOpen, setDropdownOpen] = useState<number | null>(null);

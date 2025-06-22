@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react';
-import { Package, RefreshCcw } from 'lucide-react';
+import { Package } from 'lucide-react';
 import { NetworkDashboard } from './NetworkDashboard';
 import { NetworkDevicesTab } from './NetworkDevicesTab';
 import { NetworkDevice } from '@/types';

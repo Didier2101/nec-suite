@@ -117,7 +117,7 @@ export const NetworkDevicesTab = ({ devices }: NetworkDevicesTabProps) => {
                 id: 'actions',
                 header: 'Logs',
                 cell: ({ row }) => (
-                    <Link href={`/inventory/${row.original.ip}`} className="text-blue-600 hover:text-blue-800">
+                    <Link href={`/nec-suite/inventory/${row.original.ip}`} className="text-blue-600 hover:text-blue-800">
                         Ver equipo
                     </Link>
                 ),

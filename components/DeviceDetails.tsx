@@ -1,10 +1,10 @@
-"use client";
+"use client"
 
 import React, { useEffect, useState } from 'react';
-import { useRouter, useParams } from 'next/navigation';
-import { Info, FileText, Settings, Power, RefreshCw, Download, Upload, Terminal, Shield, Wifi, HardDrive, Cpu } from 'lucide-react';
+import { Info, FileText, Settings, Power, RefreshCw, Download, Terminal, Shield, Wifi, HardDrive, } from 'lucide-react';
 
 interface Device {
+    deviceIp?: string;
     brand: string;
     hostname: string;
     id: number;
@@ -44,13 +44,7 @@ interface Backup {
     type: 'manual' | 'auto';
 }
 
-export default function DeviceDetailsPage() {
-    const router = useRouter();
-    const params = useParams();
-    console.log('params:', params); // Debugging log
-
-    const deviceIp = params.ip as string;
-
+export default function DeviceDetails({ deviceIp }: { deviceIp: string }) {
     const [device, setDevice] = useState<Device | null>(null);
     const [logs, setLogs] = useState<Log[]>([]);
     const [loading, setLoading] = useState(true);
@@ -111,30 +105,30 @@ export default function DeviceDetailsPage() {
 
                 // Configuración inicial
                 setConfig(`# Configuración de ${data.device.hostname}
-# Ejemplo de configuración
-version ${data.device.version};
-system {
-    host-name ${data.device.hostname};
-    time-zone America/Bogota;
-    root-authentication {
-        encrypted-password "$9$...";
-    }
-    services {
-        ssh;
-        netconf {
-            ssh;
+    # Ejemplo de configuración
+    version ${data.device.version};
+    system {
+        host-name ${data.device.hostname};
+        time-zone America/Bogota;
+        root-authentication {
+            encrypted-password "$9$...";
         }
-    }
-}
-interfaces {
-    ge-0/0/0 {
-        unit 0 {
-            family inet {
-                address ${data.device.ip}/24;
+        services {
+            ssh;
+            netconf {
+                ssh;
             }
         }
     }
-}`);
+    interfaces {
+        ge-0/0/0 {
+            unit 0 {
+                family inet {
+                    address ${data.device.ip}/24;
+                }
+            }
+        }
+    }`);
 
             } catch (err) {
                 setError(err instanceof Error ? err.message : 'Error desconocido al cargar los datos.');
@@ -260,17 +254,16 @@ interfaces {
                         {error ? 'Error' : 'Equipo no encontrado'}
                     </h2>
                     <p className="text-gray-800">{error || 'El equipo solicitado no fue encontrado.'}</p>
-                    <a href="/inventory" className="mt-4 inline-block text-blue-600 hover:underline">← Volver a Inventario</a>
+                    <a href="/nec-suite/inventory" className="mt-4 inline-block text-blue-600 hover:underline">← Volver a Inventario</a>
                 </div>
             </div>
         );
     }
-
     return (
         <div className="min-h-screen bg-gray-50 p-6">
             <div className="max-w-7xl mx-auto bg-white shadow-md rounded-lg p-6">
                 <div className="flex justify-between items-center mb-6">
-                    <a href="/inventory" className="text-blue-600 hover:underline flex items-center">
+                    <a href="/nec-suite/inventory" className="text-blue-600 hover:underline flex items-center">
                         <span className="mr-2">←</span> Volver a Inventario
                     </a>
                     <h1 className="text-3xl font-extrabold text-gray-900">
@@ -688,5 +681,5 @@ interfaces {
                 </div>
             </div>
         </div>
-    );
+    )
 }
