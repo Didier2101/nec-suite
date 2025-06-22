@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Package, RefreshCcw } from 'lucide-react';
 import { NetworkDashboard } from './NetworkDashboard';
 import { NetworkDevicesTab } from './NetworkDevicesTab';
@@ -15,24 +15,27 @@ export const MainInventory = () => {
     const [devices, setDevices] = useState<NetworkDevice[]>([]);
     const [loading, setLoading] = useState(false);
 
-    const fetchDeviceData = async () => {
-        try {
-            setLoading(true);
-            const response = await fetch('/api/devices');
-            if (!response.ok) throw new Error(`HTTP error ${response.status}`);
-            const data = await response.json();
-            setDevices(data);
-        } catch (err) {
-            const errorMessage = err instanceof Error ? err.message : 'Error desconocido';
-            Swal.fire({
-                icon: 'error',
-                title: 'Error al obtener los dispositivos',
-                text: errorMessage,
-            });
-        } finally {
-            setLoading(false);
-        }
-    };
+    useEffect(() => {
+        const fetchDeviceData = async () => {
+            try {
+                setLoading(true);
+                const response = await fetch('/api/devices');
+                if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+                const data = await response.json();
+                setDevices(data);
+            } catch (err) {
+                const errorMessage = err instanceof Error ? err.message : 'Error desconocido';
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error al obtener los dispositivos',
+                    text: errorMessage,
+                });
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchDeviceData();
+    }, []);
 
     return (
         <div className="min-h-screen">
@@ -49,7 +52,7 @@ export const MainInventory = () => {
                 tabs={inventoryTabs}
                 activeTab={activeTab}
                 onTabChange={(id) => setActiveTab(id as 'dashboard' | 'network')}
-                onRefresh={fetchDeviceData}
+                // onRefresh={fetchDeviceData}
                 loading={loading}
             />
 
