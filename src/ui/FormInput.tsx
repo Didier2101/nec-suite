@@ -17,6 +17,7 @@ export function FormInput<T extends FieldValues>({
     showPasswordToggle = false,
     className = "",
     disabled = false,
+
 }: FormInputProps<T>) {
 
     const [showPassword, setShowPassword] = useState(false);

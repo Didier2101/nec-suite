@@ -4,8 +4,8 @@ import { LogOut } from "lucide-react";
 
 export default function Header() {
     return (
-        <div className="bg-white border-b border-gray-200 shadow-sm py-3 px-4 md:px-6 relative z-10">
-            <div className="max-w-6xl mx-auto">
+        <div className="bg-white py-3 px-4 md:px-6 relative z-10">
+            <div className="">
                 {/* Desktop Header */}
 
                 <div className="flex justify-between items-center">

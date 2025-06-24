@@ -1,7 +1,7 @@
 
 import { Activity, Server, Router, } from 'lucide-react';
 import { StatCard } from './StatCard';
-import { NetworkDevice } from '@/types';
+import { NetworkDevice } from '@/types/device';
 import { calculateDevicesByBrand, calculateDevicesByType, calculateDevicesTimeline, calculateNetworkStats } from '@/src/utils/network-dashboard-utils/functions';
 import { NetworkChartSection } from './NetworkChartSection';
 

@@ -1,6 +1,6 @@
 // src/utils/networkStats.ts
 
-import { BrandData, NetworkDevice, TimelineData, TypeData } from "@/types";
+import { BrandData, NetworkDevice, TimelineData, TypeData } from "@/types/device";
 
 export const calculateNetworkStats = (devices: NetworkDevice[]) => {
     const total = devices.length;

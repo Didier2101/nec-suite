@@ -9,7 +9,8 @@ import {
     ChevronRightIcon,
     ChevronLeftIcon,
     LogOut,
-    ChartNetwork
+    ChartNetwork,
+    BrainCircuit
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -19,29 +20,35 @@ import Swal from "sweetalert2";
 const navigationItems = [
     {
         name: 'VNOC',
-        href: '/nec-suite/vnoc',
+        href: '/vnoc',
         icon: Server,
     },
     {
         name: 'RAG',
-        href: '/nec-suite/rac',
+        href: '/rac',
         icon: Cpu,
     },
     {
         name: 'Inventory',
-        href: '/nec-suite/inventory',
+        href: '/inventory',
         icon: Archive,
     },
     {
         name: 'Topo Logic',
-        href: '/nec-suite/topo',
+        href: '/topo',
         icon: ChartNetwork,
     },
+
     {
-        name: 'Administracion',
-        href: '/nec-suite/admin',
-        icon: Settings,
+        name: 'Machine Learning',
+        href: '/machine',
+        icon: BrainCircuit, // O cualquier otro ícono relevante
     },
+    // {
+    //     name: 'Administracion',
+    //     href: '/admin',
+    //     icon: Settings,
+    // },
 
 ];
 
@@ -50,7 +57,7 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ className = '' }: SidebarProps) {
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(true);
     const pathname = usePathname();
     const router = useRouter();
 
@@ -134,6 +141,25 @@ export default function Sidebar({ className = '' }: SidebarProps) {
                             </li>
                         );
                     })}
+                </ul>
+            </nav>
+            {/* aqui va el link de configuracion*/}
+            <nav className="mt-6 mb-4">
+                <ul className="space-y-2 px-3">
+                    <li>
+                        <Link
+                            href="/admin"
+                            className={`flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname === '/settings'
+                                ? 'bg-blue-600 text-white'
+                                : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                                }`}
+                        >
+                            <Settings className={`h-5 w-5 ${collapsed ? '' : 'mr-3'}`} />
+                            {!collapsed && (
+                                <span>Configuración</span>
+                            )}
+                        </Link>
+                    </li>
                 </ul>
             </nav>
 

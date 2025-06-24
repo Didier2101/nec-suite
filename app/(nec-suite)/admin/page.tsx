@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { User, Shield, Users, Plus, Settings } from 'lucide-react';
+import { User } from 'lucide-react';
 // import UserForm from '@/components/admin/UserForm';
 import UserList from '@/components/admin/UserList';
 import { User as UserType } from '@/types/users';

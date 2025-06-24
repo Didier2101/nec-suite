@@ -10,3 +10,8 @@ export const userTabs = [
     { id: 'new_user', name: 'Nuevo usuario', icon: Plus },
     { id: 'roles', name: 'Roles y Permisos', icon: Shield },
 ];
+
+export const settingsTabs = [
+    // { id: 'info', name: 'Informacion', icon: Activity },
+    { id: 'logs', name: 'logs', icon: Activity },
+];
