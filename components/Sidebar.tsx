@@ -1,6 +1,5 @@
 'use client';
 
-import { FormButton } from "@/src/ui/FormButton";
 import {
     Server,
     Cpu,
@@ -9,8 +8,9 @@ import {
     ChevronRightIcon,
     ChevronLeftIcon,
     LogOut,
-    ChartNetwork,
-    BrainCircuit
+    BrainCircuit,
+    Network,
+    FileText
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -36,20 +36,18 @@ const navigationItems = [
     {
         name: 'Topo Logic',
         href: '/topo',
-        icon: ChartNetwork,
+        icon: Network,
     },
-
     {
         name: 'Machine Learning',
         href: '/machine',
-        icon: BrainCircuit, // O cualquier otro ícono relevante
+        icon: BrainCircuit,
     },
     // {
-    //     name: 'Administracion',
-    //     href: '/admin',
-    //     icon: Settings,
-    // },
-
+    //     name: 'Soporte de Archivos',
+    //     href: '/file-support',
+    //     icon: FileText, // de lucide-react
+    // }
 ];
 
 interface SidebarProps {
@@ -58,6 +56,7 @@ interface SidebarProps {
 
 export default function Sidebar({ className = '' }: SidebarProps) {
     const [collapsed, setCollapsed] = useState(true);
+    const [hoveredItem, setHoveredItem] = useState<string | null>(null);
     const pathname = usePathname();
     const router = useRouter();
 
@@ -79,8 +78,6 @@ export default function Sidebar({ className = '' }: SidebarProps) {
             const res = await fetch('/api/logout', { method: 'POST' });
 
             if (res.ok) {
-                // Limpia los datos almacenados
-
                 await Swal.fire({
                     title: 'Sesión cerrada',
                     text: 'Has cerrado sesión exitosamente.',
@@ -100,15 +97,19 @@ export default function Sidebar({ className = '' }: SidebarProps) {
     };
 
     return (
-        <div className={`flex flex-col bg-gray-900 text-white transition-all duration-300 ${collapsed ? 'w-16' : 'w-64'} h-screen ${className}`}>
+        <div className={`hidden md:flex flex-col bg-white text-gray-800 transition-all duration-300 ${collapsed ? 'w-16' : 'w-64'} h-screen border-r border-gray-200`}>
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-gray-700">
+            <div className="flex items-center justify-between p-4 border-b border-gray-200">
                 {!collapsed && (
-                    <h1 className="text-xl font-bold">NEC Suite</h1>
+                    <h2 className="text-xl font-bold">
+                        <span className="font-bold text-blue-900">NEC</span>
+                        <span className="font-normal text-orange-500"> Suite</span>
+                    </h2>
                 )}
+
                 <button
                     onClick={() => setCollapsed(!collapsed)}
-                    className="p-1 rounded-lg hover:bg-gray-700 transition-colors"
+                    className="p-1 rounded-lg hover:bg-gray-100 transition-colors text-gray-600 hover:text-gray-900"
                 >
                     {collapsed ? (
                         <ChevronRightIcon className="h-5 w-5" />
@@ -119,70 +120,100 @@ export default function Sidebar({ className = '' }: SidebarProps) {
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 overflow-y-auto mt-6">
+            <nav className="flex-1 overflow-visible mt-6">
                 <ul className="space-y-2 px-3">
                     {navigationItems.map((item) => {
                         const isActive = pathname === item.href;
                         return (
-                            <li key={item.name}>
+                            <li key={item.name} className="relative">
                                 <Link
                                     href={item.href}
                                     className={`flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors ${isActive
-                                        ? 'bg-blue-600 text-white'
-                                        : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                                        ? 'bg-blue-100 text-blue-700'
+                                        : 'text-gray-700 hover:bg-gray-100'
                                         }`}
-                                    title={collapsed ? item.name : ''}
+                                    data-nav-item={item.name}
+                                    onMouseEnter={() => collapsed && setHoveredItem(item.name)}
+                                    onMouseLeave={() => setHoveredItem(null)}
                                 >
-                                    <item.icon className={`h-5 w-5 ${collapsed ? '' : 'mr-3'}`} />
+                                    <item.icon className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} ${isActive ? 'text-blue-600' : 'text-gray-600'
+                                        }`} />
                                     {!collapsed && (
                                         <span>{item.name}</span>
                                     )}
                                 </Link>
+
+                                {/* Custom Tooltip */}
+                                {collapsed && hoveredItem === item.name && (
+                                    <div className="absolute left-12 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white px-3 py-2 rounded-md text-sm whitespace-nowrap z-[9999] shadow-xl">
+                                        {item.name}
+                                        <div className="absolute right-full top-1/2 transform -translate-y-1/2 w-0 h-0 border-t-[6px] border-b-[6px] border-r-[6px] border-transparent border-r-gray-800"></div>
+                                    </div>
+                                )}
                             </li>
                         );
                     })}
                 </ul>
             </nav>
-            {/* aqui va el link de configuracion*/}
+
+            {/* Configuración y Logout */}
             <nav className="mt-6 mb-4">
                 <ul className="space-y-2 px-3">
-                    <li>
+                    <li className="relative">
                         <Link
                             href="/admin"
                             className={`flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors ${pathname === '/settings'
-                                ? 'bg-blue-600 text-white'
-                                : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                                ? 'bg-blue-100 text-blue-700'
+                                : 'text-gray-700 hover:bg-gray-100'
                                 }`}
+                            onMouseEnter={() => collapsed && setHoveredItem('Configuración')}
+                            onMouseLeave={() => setHoveredItem(null)}
                         >
-                            <Settings className={`h-5 w-5 ${collapsed ? '' : 'mr-3'}`} />
-                            {!collapsed && (
-                                <span>Configuración</span>
-                            )}
+                            <Settings className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} ${pathname === '/settings' ? 'text-blue-600' : 'text-gray-600'
+                                }`} />
+                            {!collapsed && <span>Configuración</span>}
                         </Link>
+
+                        {collapsed && hoveredItem === 'Configuración' && (
+                            <div className="absolute left-12 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white px-3 py-2 rounded-md text-sm whitespace-nowrap z-[9999] shadow-xl">
+                                Configuración
+                                <div className="absolute right-full top-1/2 transform -translate-y-1/2 w-0 h-0 border-t-[6px] border-b-[6px] border-r-[6px] border-transparent border-r-gray-800"></div>
+                            </div>
+                        )}
+                    </li>
+                    <li className="relative">
+                        <button
+                            onClick={handleLogout}
+                            className="flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-700 hover:bg-gray-100 w-full"
+                            onMouseEnter={() => collapsed && setHoveredItem('Cerrar sesión')}
+                            onMouseLeave={() => setHoveredItem(null)}
+                        >
+                            <LogOut className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} text-gray-600`} />
+                            {!collapsed && <span>Cerrar sesión</span>}
+                        </button>
+
+                        {collapsed && hoveredItem === 'Cerrar sesión' && (
+                            <div className="absolute left-12 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white px-3 py-2 rounded-md text-sm whitespace-nowrap z-[9999] shadow-xl">
+                                Cerrar sesión
+                                <div className="absolute right-full top-1/2 transform -translate-y-1/2 w-0 h-0 border-t-[6px] border-b-[6px] border-r-[6px] border-transparent border-r-gray-800"></div>
+                            </div>
+                        )}
                     </li>
                 </ul>
             </nav>
 
             {/* Footer */}
             {!collapsed && (
-                <div className="p-4 border-t border-gray-700">
+                <div className="p-4 border-t border-gray-200">
                     <div className="flex items-center mb-3">
                         <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                            <span className="text-sm font-medium">U</span>
+                            <span className="text-sm font-medium text-white">U</span>
                         </div>
                         <div className="ml-3">
-                            <p className="text-sm font-medium">Usuario</p>
-                            <p className="text-xs text-gray-400">Admin</p>
+                            <p className="text-sm font-medium text-gray-900">Usuario</p>
+                            <p className="text-xs text-gray-500">Admin</p>
                         </div>
                     </div>
-                    <FormButton
-                        onClick={handleLogout}
-                        icon={LogOut}
-                        size="sm"
-                        className="w-full bg-gray-900 border border-gray-400 hover:bg-gray-800"
-                    >
-                        Cerrar sesión
-                    </FormButton>
                 </div>
             )}
         </div>

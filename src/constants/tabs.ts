@@ -15,3 +15,8 @@ export const settingsTabs = [
     // { id: 'info', name: 'Informacion', icon: Activity },
     { id: 'logs', name: 'logs', icon: Activity },
 ];
+export const topoLogicTabs = [
+    // { id: 'info', name: 'Informacion', icon: Activity },
+    { id: 'topologia', name: 'Topologic', icon: Activity },
+    { id: 'disenador', name: 'Diseñador de Red', icon: Activity },
+];

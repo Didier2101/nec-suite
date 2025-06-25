@@ -2,7 +2,9 @@ import { NextResponse } from 'next/server';
 
 export async function GET(request: Request, { params }: { params: { ip: string } }) {
     try {
-        const { ip } = params; // No necesita await, ya no es Promise
+        // CAMBIO AQUÍ: Aplica await directamente a la desestructuración de params
+        // Aunque params sea de tipo { ip: string }, Next.js te lo pide así.
+        const { ip } = await params;
 
         const flaskUrl = `http://192.168.2.47:5005/api/device_by_ip`;
 
@@ -23,7 +25,6 @@ export async function GET(request: Request, { params }: { params: { ip: string }
 
         const deviceData = await flaskResponse.json();
 
-        // Devuelve directamente los datos de Flask sin envolverlos nuevamente
         return NextResponse.json(deviceData);
 
     } catch (error) {

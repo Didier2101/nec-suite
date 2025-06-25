@@ -1,0 +1,84 @@
+[
+    {
+        "id": "R1",
+        "type": "router",
+        "name": "Router Principal",
+        "x": 200,
+        "y": 100,
+        "interfaces": [
+            "eth0",
+            "eth1",
+            "serial0"
+        ]
+    },
+    {
+        "id": "R2",
+        "type": "router",
+        "name": "Router Secundario",
+        "x": 500,
+        "y": 100,
+        "interfaces": [
+            "eth0",
+            "eth1",
+            "eth2",
+            "serial0"
+        ]
+    },
+    {
+        "id": "SW1",
+        "type": "switch",
+        "name": "Switch Core",
+        "x": 350,
+        "y": 250,
+        "interfaces": [
+            "port1",
+            "port2",
+            "port3",
+            "port4",
+            "port5"
+        ]
+    },
+    {
+        "id": "PC1",
+        "type": "computer",
+        "name": "Workstation 1",
+        "x": 150,
+        "y": 350,
+        "interfaces": [
+            "eth0"
+        ]
+    },
+    {
+        "id": "PC2",
+        "type": "computer",
+        "name": "Workstation 2",
+        "x": 300,
+        "y": 400,
+        "interfaces": [
+            "eth0"
+        ]
+    },
+    {
+        "id": "PC3",
+        "type": "computer",
+        "name": "Server",
+        "x": 550,
+        "y": 350,
+        "interfaces": [
+            "eth0",
+            "eth1"
+        ]
+    },
+    {
+        "id": "FW1",
+        "type": "firewall",
+        "name": "Firewall Principal",
+        "x": 350,
+        "y": 50,
+        "interfaces": [
+            "wan",
+            "lan",
+            "dmz"
+        ]
+    }
+]

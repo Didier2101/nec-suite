@@ -4,69 +4,15 @@
 import { useEffect, useState } from 'react';
 import { MoreHorizontal, User as UserIcon, Mail, Shield, Trash2, Eye, Plus } from 'lucide-react';
 import { User } from '@/types/users';
-import { FormButton } from '@/src/ui/FormButton';
 
 interface UserListProps {
-    onUserSelected: (user: User) => void;
-    onUserDeleted: (id: number) => void;
-    onCreateUser: () => void;
+
+    users: User[];
 }
 
-export default function UserList({ onUserSelected }: UserListProps) {
-    const [users, setUsers] = useState<User[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [dropdownOpen, setDropdownOpen] = useState<number | null>(null);
+export default function UserList({ users }: UserListProps) {
+    // console.log('Usuarios recibidos:', users);
 
-    const fetchUsers = async () => {
-        try {
-            setLoading(true);
-            console.log('Haciendo fetch a /api/admin/user_list...');
-            const response = await fetch('/api/admin/user_list');
-
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
-            }
-
-            const data = await response.json();
-            console.log('Usuarios recibidos desde API:', data);
-
-            // Asegura que sea array
-            setUsers(Array.isArray(data.users) ? data.users : []);
-        } catch (error) {
-            console.error('Error fetching users:', error);
-            setUsers([]);
-            alert('Error loading users. Please try again later.');
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchUsers();
-    }, []);
-
-    // const handleDelete = async (id: number) => {
-    //     try {
-    //         // Confirm deletion
-    //         if (!confirm('Are you sure you want to delete this user?')) {
-    //             return;
-    //         }
-
-    //         // Simulate deletion
-    //         setUsers(users.filter(user => user.id !== id));
-    //         onUserDeleted(id);
-
-    //         // Show success message
-    //         alert('User deleted successfully');
-    //     } catch (error) {
-    //         console.error('Error deleting user:', error);
-    //         alert('Error deleting user. Please try again.');
-    //     }
-    // };
-
-    const toggleDropdown = (userId: number) => {
-        setDropdownOpen(dropdownOpen === userId ? null : userId);
-    };
 
 
     return (
@@ -104,7 +50,7 @@ export default function UserList({ onUserSelected }: UserListProps) {
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                        {users.length > 0 ? (
+                        {users?.length > 0 ? (
                             users.map((user) => (
                                 <tr key={user.id} className="hover:bg-gray-50">
                                     <td className="px-6 py-4 whitespace-nowrap">
@@ -132,13 +78,13 @@ export default function UserList({ onUserSelected }: UserListProps) {
                                         <div className="relative inline-block text-left">
                                             <button
                                                 type="button"
-                                                onClick={() => toggleDropdown(user.id)}
+                                                // onClick={() => toggleDropdown(user.id)}
                                                 className="inline-flex justify-center w-full rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-100"
                                             >
                                                 <MoreHorizontal className="h-4 w-4" />
                                             </button>
 
-                                            {dropdownOpen === user.id && (
+                                            {/* {dropdownOpen === user.id && (
                                                 <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
                                                     <div className="py-1">
                                                         <button
@@ -163,7 +109,7 @@ export default function UserList({ onUserSelected }: UserListProps) {
                                                         </button>
                                                     </div>
                                                 </div>
-                                            )}
+                                            )} */}
                                         </div>
                                     </td>
                                 </tr>

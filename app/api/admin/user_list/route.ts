@@ -10,7 +10,7 @@ export async function GET() {
         }
 
         const data = await flaskResponse.json();
-        // console.log('Datos de usuarios recibidos:', data);
+        console.log('Datos de usuarios recibidos:', data);
         return NextResponse.json(data);
 
     } catch (error) {

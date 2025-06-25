@@ -1,8 +1,10 @@
 import HeaderNecSuite from "@/src/ui/HeaderNecSuite";
-import { Package } from "lucide-react";
+import { Network, GitGraph, Route, Server, Wifi } from "lucide-react";
 import type { Metadata } from "next";
+
 export const metadata: Metadata = {
-    title: "Nec - Suite - Topo Logic",
+    title: "NEC Suite - Topología de Red",
+    description: "Visualización y gestión de la topología de red de equipos"
 };
 
 export default function NecSuiteLayout({
@@ -10,14 +12,16 @@ export default function NecSuiteLayout({
 }: {
     children: React.ReactNode;
 }) {
-
     return (
         <div className="flex-1 overflow-auto">
-            {/* Header */}
+            {/* Header suite */}
             <HeaderNecSuite
-                title="Network Topo Login Management"
-                description="Gestión completa de equipos y recursos de red"
-                Icon={Package}
+                title="Topología de Red"
+                description="Visualización y análisis de la estructura de red"
+                Icon={Network} // Opciones alternativas: GitGraph, Route, Server
+            // Icon={GitGraph} // Para visualización jerárquica
+            // Icon={Route} // Para enrutamiento de red
+            // Icon={Server} // Para infraestructura física
             />
             {children}
         </div>

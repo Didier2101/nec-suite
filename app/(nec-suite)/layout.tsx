@@ -1,3 +1,4 @@
+import MobileNav from "@/components/movil/MobileNav";
 import Sidebar from "@/components/Sidebar";
 
 export default function NecSuiteLayout({
@@ -11,6 +12,8 @@ export default function NecSuiteLayout({
             <div className="flex-1 overflow-auto">
                 {children}
             </div>
+            {/* Navegación móvil */}
+            <MobileNav />
         </div>
     );
 }

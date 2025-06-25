@@ -2,7 +2,7 @@ import HeaderNecSuite from "@/src/ui/HeaderNecSuite";
 import { Package } from "lucide-react";
 import type { Metadata } from "next";
 export const metadata: Metadata = {
-    title: "NEC Suite - inventory",
+    title: "Nec - Suite - Administracion",
 };
 
 export default function NecSuiteLayout({
@@ -15,10 +15,11 @@ export default function NecSuiteLayout({
         <>
             {/* Header suite */}
             <HeaderNecSuite
-                title="Network Inventory Management"
-                description="Gestión completa de equipos y recursos de red"
+                title="Administración de la Plataforma"
+                description="Administra usuarios, permisos y configuraciones del sistema"
                 Icon={Package}
             />
+
             {children}
         </>
     );
