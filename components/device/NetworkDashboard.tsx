@@ -1,12 +1,12 @@
 
 import { Activity, Server, Router, } from 'lucide-react';
 import { StatCard } from './StatCard';
-import { NetworkDevice } from '@/types/device';
+import { Device } from '@/types/device';
 import { calculateDevicesByBrand, calculateDevicesByType, calculateDevicesTimeline, calculateNetworkStats } from '@/src/utils/network-dashboard-utils/functions';
 import { NetworkChartSection } from './NetworkChartSection';
 
 
-export const NetworkDashboard = ({ devices }: { devices: NetworkDevice[] }) => {
+export const NetworkDashboard = ({ devices }: { devices: Device[] }) => {
 
     const stats = calculateNetworkStats(devices);
     const brandData = calculateDevicesByBrand(devices);
@@ -14,7 +14,7 @@ export const NetworkDashboard = ({ devices }: { devices: NetworkDevice[] }) => {
     const timelineData = calculateDevicesTimeline(devices);
 
     return (
-        <div className="p-6 w-full max-w-7xl mx-auto space-y-6">
+        <div className="">
             {/* Header */}
             <div className="mb-8">
                 <h1 className="text-3xl font-bold text-gray-900 flex items-center">
@@ -22,32 +22,33 @@ export const NetworkDashboard = ({ devices }: { devices: NetworkDevice[] }) => {
                     Network Dashboard
                 </h1>
                 <p className="text-gray-600 mt-2">
-                    Estadísticas y métricas de equipos de red en tiempo real
+                    Real-time statistics and metrics of network devices
                 </p>
+
             </div>
 
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <StatCard
-                    title="Total Equipos"
+                    title="Total Devices"
                     value={stats.total}
                     icon={Server}
                     color="bg-blue-500"
-                    subtitle={`${stats.brands} marcas diferentes`}
+                    subtitle={`${stats.brands} different brands`}
                 />
                 <StatCard
                     title="Routers"
                     value={stats.routers}
                     icon={Router}
                     color="bg-purple-500"
-                    subtitle={`${stats.routersPercentage}% del total`}
+                    subtitle={`${stats.routersPercentage}% of the total`}
                 />
                 <StatCard
                     title="Switches"
                     value={stats.switches}
                     icon={Server}
                     color="bg-green-500"
-                    subtitle={`${stats.switchesPercentage}% del total`}
+                    subtitle={`${stats.switchesPercentage}% of the total`}
                 />
             </div>
 

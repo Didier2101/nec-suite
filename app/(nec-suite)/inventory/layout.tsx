@@ -16,10 +16,13 @@ export default function NecSuiteLayout({
             {/* Header suite */}
             <HeaderNecSuite
                 title="Network Inventory Management"
-                description="Gestión completa de equipos y recursos de red"
+                description="Comprehensive management of network devices and resources"
                 Icon={Package}
             />
-            {children}
+
+            <main className="">
+                {children}
+            </main>
         </>
     );
 }

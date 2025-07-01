@@ -2,7 +2,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { NetworkDashboard } from './NetworkDashboard';
 import { NetworkDevicesTab } from './NetworkDevicesTab';
-import Loading from '@/src/ui/Loading';
 import Swal from 'sweetalert2';
 import { Device } from '@/types/device';
 import { TabsNavigation } from '@/src/ui/TabsNavigation';
@@ -49,8 +48,8 @@ export const MainInventory = () => {
             />
 
             {/* Contenido */}
-            <div className="max-w-7xl mx-auto">
-                {loading && <Loading text="Cargando equipos de red..." />}
+            <div className=" p-6 w-full max-w-7xl mx-auto ">
+                {loading && <p>Cargando equipos de red...</p>}
                 {!loading && activeTab === 'dashboard' && <NetworkDashboard devices={devices} />}
                 {!loading && activeTab === 'network' && (
                     <NetworkDevicesTab devices={devices} />

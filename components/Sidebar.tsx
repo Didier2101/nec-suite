@@ -43,11 +43,11 @@ const navigationItems = [
         href: '/machine',
         icon: BrainCircuit,
     },
-    // {
-    //     name: 'Soporte de Archivos',
-    //     href: '/file-support',
-    //     icon: FileText, // de lucide-react
-    // }
+    {
+        name: 'File Support',
+        href: '/file-support',
+        icon: FileText,
+    }
 ];
 
 interface SidebarProps {

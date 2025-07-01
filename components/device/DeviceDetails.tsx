@@ -1,9 +1,9 @@
-"use client"
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import { TabsNavigation } from '@/src/ui/TabsNavigation';
 import { settingsTabs } from '@/src/constants/tabs';
-import DeviceLogs from './DeviceLogs'; // Importar el nuevo componente
+import DeviceLogs from './DeviceLogs';
 import { Device, DeviceLog } from '@/types/device';
 import Link from 'next/link';
 import Loading from '@/src/ui/Loading';
@@ -18,7 +18,7 @@ export default function DeviceDetails({ deviceIp }: { deviceIp: string }) {
     useEffect(() => {
         const fetchData = async () => {
             if (!deviceIp) {
-                setError('IP de dispositivo no proporcionada.');
+                setError('Device IP not provided.');
                 setLoading(false);
                 return;
             }
@@ -34,23 +34,18 @@ export default function DeviceDetails({ deviceIp }: { deviceIp: string }) {
                 }
 
                 const data = await response.json();
-
-                // Verifica la estructura de los datos
-
-                // Ajuste para manejar ambos formatos de respuesta
                 const device = data.device || data;
                 const logs = data.logs || [];
 
                 if (!device) {
-                    throw new Error('Datos del dispositivo no encontrados');
+                    throw new Error('Device data not found');
                 }
 
                 setDevice(device);
                 setLogs(logs);
-
             } catch (err) {
-                console.error('Error al cargar datos:', err);
-                setError(err instanceof Error ? err.message : 'Error desconocido');
+                console.error('Error loading data:', err);
+                setError(err instanceof Error ? err.message : 'Unknown error');
             } finally {
                 setLoading(false);
             }
@@ -61,19 +56,21 @@ export default function DeviceDetails({ deviceIp }: { deviceIp: string }) {
 
     if (loading) {
         return (
-            <Loading text="Cargando detalles del dispositivo..." />
+            <p>Loading device details...</p>
         );
     }
 
     if (error || !device) {
         return (
             <div className="flex justify-center items-center h-screen bg-gray-50">
-                <div className="p-6 bg-white rounded-lg shadow-md">
+                <div className="p-6 bg-white rounded-lg shadow-md text-center">
                     <h2 className="text-xl font-bold text-gray-700 mb-2">
-                        {error ? 'Error' : 'Equipo no encontrado'}
+                        {error ? 'Error' : 'Device Not Found'}
                     </h2>
-                    <p className="text-gray-800">{error || 'El equipo solicitado no fue encontrado.'}</p>
-                    <Link href="/inventory" className="mt-4 inline-block text-blue-600 hover:underline">← Volver a Inventario</Link>
+                    <p className="text-gray-800">{error || 'The requested device could not be found.'}</p>
+                    <Link href="/inventory" className="mt-4 inline-block text-blue-600 hover:underline">
+                        ← Back to Inventory
+                    </Link>
                 </div>
             </div>
         );
@@ -84,31 +81,31 @@ export default function DeviceDetails({ deviceIp }: { deviceIp: string }) {
             <div className="max-w-7xl mx-auto bg-white shadow-md rounded-lg p-6">
                 <div className="flex justify-between items-center mb-6">
                     <Link href="/inventory" className="text-blue-600 hover:underline flex items-center">
-                        <span className="mr-2">←</span> Volver a Inventario
+                        <span className="mr-2">←</span> Back to Inventory
                     </Link>
                     <h1 className="text-2xl font-extrabold text-gray-900 uppercase tracking-tight">
-                        Detalles de {device.hostname || 'Dispositivo'}
+                        {device.hostname || 'Device'} Details
                     </h1>
                 </div>
 
-                {/* Tabs de navegación */}
+                {/* Navigation Tabs */}
                 <TabsNavigation
                     tabs={settingsTabs}
                     activeTab={activeTab}
                     onTabChange={(id) => setActiveTab(id as 'logs')}
                 />
 
-                {/* Contenido de las pestañas */}
+                {/* Tab Content */}
                 <div className="mt-6">
-                    {/* {activeTab === 'info' && (
-                        <InfoDevice device={device} />
-                    )} */}
+                    {/* Future support:
+          {activeTab === 'info' && (
+            <InfoDevice device={device} />
+          )} */}
 
                     {activeTab === 'logs' && (
                         <DeviceLogs logs={logs} />
                     )}
                 </div>
-
             </div>
         </div>
     );

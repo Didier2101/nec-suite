@@ -18,7 +18,7 @@ export default function Header() {
                     <div className="text-right flex items-center gap-10">
                         <div className=" hidden md:flex flex-col items-end">
                             <h1 className="text-xl font-bold text-blue-800">
-                                Nec suite
+                                NEC suite
                             </h1>
                             <div className="flex justify-end gap-1.5">
                                 <p className="text-xs text-gray-600">Powered by</p>

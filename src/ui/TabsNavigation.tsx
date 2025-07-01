@@ -50,7 +50,8 @@ export const TabsNavigation = ({ tabs, activeTab, onTabChange, onRefresh, loadin
                                 <RefreshCcw
                                     className={`h-5 w-5 mr-2 transition-transform duration-300 ${loading ? 'animate-spin' : ''}`}
                                 />
-                                {loading ? "Actualizando" : "Actualizar"}
+                                {loading ? "Updating" : "Update"}
+
                             </button>
                         )}
 

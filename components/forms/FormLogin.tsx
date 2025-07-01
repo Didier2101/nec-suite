@@ -6,6 +6,7 @@ import { FormButton } from "@/src/ui/FormButton";
 import { FormInput } from "@/src/ui/FormInput";
 import Logo from "@/src/ui/Logo";
 import { ArrowRight, Lock, Mail, } from "lucide-react"
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 
@@ -47,7 +48,6 @@ export default function FormLogin() {
             });
 
             const result = await response.json();
-            console.log('resultado del login', result)
 
 
             if (!response.ok) {
@@ -68,11 +68,7 @@ export default function FormLogin() {
                 showConfirmButton: false,
             });
 
-            setTimeout(() => {
-                const userRole = result.user?.role || result.rol;
-                router.push(userRole === "ADMIN" ? '/admin' : '/dashboard');
-            }, 1500);
-
+            router.push("inventory")
         } catch (error) {
             console.error("Login error:", error);
             Swal.fire({
@@ -83,65 +79,69 @@ export default function FormLogin() {
         }
     };
     return (
-        <div className="flex  items-center justify-center mt-20 ">
-            {/* Contenedor principal con fondo y espaciado */}
-            <div className="w-full max-w-[400px] space-y-8 bg-white p-8 rounded-xl shadow-lg bg-gray-100">
-                {/* Logo y Título */}
-                <div className="flex items-center flex-col gap-3">
-                    <Logo width={200} height={160} />
-                    <h2 className=" text-lg font-extrabold text-blue-800 mt-4">
-                        Sign in to your account
-                    </h2>
+        <div className="w-full max-w-[400px] space-y-8 bg-white p-8 rounded-xl shadow-lg">
+            {/* Logo y Título */}
+            <div className="flex items-center flex-col gap-3">
+                <Logo width={200} height={160} />
+                <h2 className="text-lg font-extrabold text-blue-800 mt-4">
+                    Sign in to your account
+                </h2>
+            </div>
+
+            {/* Formulario de inicio de sesión */}
+            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+                <div className="space-y-4">
+                    {/* Campo de email */}
+                    <FormInput
+                        label="Email address"
+                        name="email"
+                        type="email"
+                        register={register}
+                        error={errors.email}
+                        placeholder="tucorreo@ejemplo.com"
+                        icon={Mail}
+                        required
+                    />
+
+                    {/* Campo de contraseña */}
+                    <FormInput
+                        label="password"
+                        name="password"
+                        type="text"
+                        register={register}
+                        error={errors.password}
+                        placeholder="tucorreo@ejemplo.com"
+                        icon={Lock}
+                        showPasswordToggle
+                        required
+                    />
                 </div>
 
-                {/* Formulario de inicio de sesión */}
-                <form className=" space-y-6" onSubmit={handleSubmit(onSubmit)}>
-                    <div className="space-y-4">
+                {/* Enlace de recuperación - AÑADIDO */}
+                <div className="flex justify-end">
+                    <Link
+                        href="/recovery"
+                        className="text-sm text-blue-600 hover:text-blue-800 hover:underline"
+                    >
+                        ¿Olvidaste tu contraseña?
+                    </Link>
+                </div>
 
-                        {/* Campo de email */}
-                        <FormInput
-                            label=" Email address"
-                            name="email"
-                            type="email"
-                            register={register}
-                            error={errors.email}
-                            placeholder="tucorreo@ejemplo.com"
-                            icon={Mail}
-                            required
-                        />
-
-                        {/* Campo de contraseña */}
-                        <FormInput
-                            label="password"
-                            name="password"
-                            type="text"
-                            register={register}
-                            error={errors.password}
-                            placeholder="tucorreo@ejemplo.com"
-                            icon={Lock}
-                            showPasswordToggle
-                            required
-                        />
-
-
-                    </div>
-
-                    {/* Botón de envío */}
-                    <div>
-                        <FormButton
-                            type="submit"
-                            variant="primary"
-                            size="md"
-                            loading={isSubmitting}
-                            icon={ArrowRight}
-                            iconPosition="right"
-                            className="w-full"
-                        >
-                            Sign in
-                        </FormButton>
-                    </div>
-                </form>
-            </div>
+                {/* Botón de envío */}
+                <div>
+                    <FormButton
+                        type="submit"
+                        variant="primary"
+                        size="md"
+                        loading={isSubmitting}
+                        icon={ArrowRight}
+                        iconPosition="right"
+                        className="w-full"
+                    >
+                        Sign in
+                    </FormButton>
+                </div>
+            </form>
         </div>
     )
 }

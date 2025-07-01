@@ -24,17 +24,18 @@ type Props = {
 const CHAT_CONFIG = {
     vnoc: {
         title: 'Virtual NOC',
-        description: 'Chat de monitoreo y operaciones',
-        apiEndpoint: '/api/chat/vnoc', // este debe usarse
-        welcomeMessage: 'Hola, soy Virtual NOC. ¿En qué puedo ayudarte hoy?',
+        description: 'Monitoring and operations chat',
+        apiEndpoint: '/api/chat/vnoc', // this should be used
+        welcomeMessage: 'Hi, I am Virtual NOC. How can I help you today?',
     },
     rac: {
         title: 'RAG Assistant',
-        description: 'Chat de asistencia técnica',
-        apiEndpoint: '/api/chat/rac', // y este para rac
-        welcomeMessage: 'Hola, soy RAG Assistant. ¿Cómo puedo asistirte?',
+        description: 'Technical assistance chat',
+        apiEndpoint: '/api/chat/rac', // and this one for rac
+        welcomeMessage: 'Hi, I am RAG Assistant. How can I assist you?',
     }
 };
+
 
 export default function Chat({ chatType }: Props) {
     const config = CHAT_CONFIG[chatType];
@@ -73,9 +74,9 @@ export default function Chat({ chatType }: Props) {
     // 🔥 FUNCIÓN HELPER PARA EXTRAER RESPUESTA
     const getResponseMessage = (status?: string, answer?: string) => {
         if (status === 'error') {
-            return 'Lo siento, hubo un error al procesar tu consulta.';
+            return 'Sorry, there was an error processing your request.';
         }
-        return answer || 'No se recibió respuesta del servidor.';
+        return answer || 'No response received from the server.';
     };
 
     const handleSendMessage = async () => {
@@ -105,9 +106,10 @@ export default function Chat({ chatType }: Props) {
 
         // Timeout de 30 segundos
         const timeoutId = setTimeout(() => {
-            addSystemMessage('El servidor está tardando demasiado en responder. Por favor intenta nuevamente.', true);
+            addSystemMessage('The server is taking too long to respond. Please try again.', true);
             setIsLoading(false);
         }, 120000);
+
 
         try {
 
@@ -175,7 +177,8 @@ export default function Chat({ chatType }: Props) {
                 {
                     id: messages.length + 2,
                     sender: 'bot',
-                    text: error instanceof Error ? error.message : 'Error desconocido al procesar la solicitud',
+                    text: error instanceof Error ? error.message : 'Unknown error occurred while processing the request'
+                    ,
                     time: new Date().toISOString(),
                     isError: true
                 }
@@ -210,25 +213,16 @@ export default function Chat({ chatType }: Props) {
     }, [messages]);
 
     return (
-        <div className="flex flex-col h-screen">
+        <div className="flex flex-col h-screen overflow-auto">
             {/* Header de la página */}
-            <div className="mb-6 pt-4 px-4">
-                <div className="flex items-center justify-between">
-                    <div>
-                        <h1 className="text-2xl font-bold text-gray-900 flex items-center">
-                            <MessageCircle className="mr-3 h-8 w-8 text-blue-600" />
-                            {config.title}
-                        </h1>
-                        <p className="text-gray-600 mt-1">{config.description}</p>
+            <div className="p-4">
 
-                    </div>
-                    <button
-                        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center"
-                        onClick={resetChat}
-                    >
-                        Nuevo Chat
-                    </button>
-                </div>
+                <button
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center"
+                    onClick={resetChat}
+                >
+                    New Chat
+                </button>
             </div>
 
             {/* Contenedor principal */}
@@ -294,7 +288,8 @@ export default function Chat({ chatType }: Props) {
                                 value={inputValue}
                                 onChange={(e) => setInputValue(e.target.value)}
                                 onKeyPress={handleKeyPress}
-                                placeholder="Escribe tu mensaje..."
+                                placeholder="Type your message..."
+
                                 className={`w-full pl-4 pr-12 py-3 border ${isLoading ? 'border-gray-200' : 'border-gray-300'
                                     } rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50`}
                                 disabled={isLoading}
@@ -311,7 +306,7 @@ export default function Chat({ chatType }: Props) {
                             </button>
                         </div>
                         <p className="text-xs text-gray-500 mt-2">
-                            Presiona Enter para enviar.
+                            Press Enter to send.
                         </p>
                     </div>
                 </div>
